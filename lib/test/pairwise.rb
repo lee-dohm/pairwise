@@ -3,6 +3,8 @@
 #
 # Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
 
+require 'test/pairwise/testpair'
+
 module Test
   # Contains tools and utilities for creating pairwise test sets from lists of independent equivalence
   # classes.

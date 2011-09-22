@@ -2,7 +2,8 @@
 # 
 # Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
 
-require 'test/pairwise/testpair'
+require 'test/unit'
+require 'test/pairwise'
 
 # Tests for the Test::Pairwise::TestPair class.
 class TestPairTests < Test::Unit::TestCase  
