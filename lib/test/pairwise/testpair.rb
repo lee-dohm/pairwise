@@ -20,6 +20,14 @@ module Test
         @excluded = false
       end
       
+      # Returns true when all properties are equivalent.
+      def ==(other)
+        @left == other.left && 
+          @right == other.right && 
+          @covered == other.covered? && 
+          @excluded == other.excluded?
+      end
+      
       # Indicates whether the pair has been covered by an already-generated test case.
       def covered?
         @covered

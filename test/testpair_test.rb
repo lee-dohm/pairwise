@@ -58,4 +58,12 @@ class TestPairTests < Test::Unit::TestCase
     assert_equal false, pair.excluded?, 'The excluded property was changed'
     assert_equal true, pair.covered?, 'The ecovered property was not set'
   end
+  
+  # Ensure that we can test for equality between two pairs.
+  def test_equality_works
+    first = TestPair.new('left', 'right')
+    second = TestPair.new('left', 'right')
+    
+    assert_equal first, second, 'The two pairs are not considered equal'
+  end
 end

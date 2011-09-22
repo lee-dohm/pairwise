@@ -7,7 +7,54 @@ require 'test/pairwise'
 
 # Tests for the Test::Pairwise module.
 class PairwiseTests < Test::Unit::TestCase
-  # Adding this test for now so that the Rake tests will not bomb on Ruby v1.8.
-  def test_nothing
+  include Test::Pairwise
+
+  # Performs per-test setup.
+  def setup
+    @left = @right = [:a, :b, :c]
+  end
+  
+  # Ensures that all pairs are generated from the two lists.
+  def test_generate_all_pairs
+    pairs = generate_all_pairs(@left, @right)
+    
+    assert_equal 9, pairs.count, 'The wrong number of elements are in the list of pairs'
+    assert_equal true, pairs.include?(TestPair.new(:a, :a)), 'The a-a pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:a, :b)), 'The a-b pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:a, :c)), 'The a-c pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:b, :a)), 'The b-a pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:b, :b)), 'The b-b pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:b, :c)), 'The b-c pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:c, :a)), 'The c-a pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:c, :b)), 'The c-b pair is not included in the list'
+    assert_equal true, pairs.include?(TestPair.new(:c, :c)), 'The c-c pair is not included in the list'
+  end
+  
+  # Ensures that the all pairs method raises an error when supplied with an empty left list.
+  def test_generate_all_pairs_raises_when_supplied_with_an_empty_left_list
+    assert_raise ArgumentError do
+      generate_all_pairs([], @right)
+    end
+  end
+  
+  # Ensures that the all pairs method raises an error when supplied with an empty right list.
+  def test_generate_all_pairs_raises_when_supplied_with_an_empty_right_list
+    assert_raise ArgumentError do
+      generate_all_pairs(@left, [])
+    end
+  end
+  
+  # Ensures that the all pairs method raises an error when supplied nil as the left parameter.
+  def test_generate_all_pairs_raises_when_left_is_nil
+    assert_raise ArgumentError do
+      generate_all_pairs(nil, @right)
+    end
+  end
+  
+  # Ensures that the all pairs method raises an error when supplied nil as the right parameter.
+  def test_generate_all_pairs_raises_when_right_is_nil
+    assert_raise ArgumentError do
+      generate_all_pairs(@left, nil)
+    end
   end
 end
