@@ -16,17 +16,29 @@ module Test
       def initialize(left, right)
         @left = left
         @right = right
+        @covered = false
+        @excluded = false
       end
       
-      # Indicates whether the pair has been covered by some previously-generated test case.
+      # Indicates whether the pair has been covered by an already-generated test case.
       def covered?
-        false
+        @covered
       end
       
-      # Indicates whether the pair has been excluded from the list of tests to be generated.
-      def excluded?
-        false
+      # Sets whether the pair has been covered by an already-generated test case.
+      def covered=(value)
+        @covered = value
       end
+      
+      # Indicates whether the pair has been excluded from generated test cases.
+      def excluded?
+        @excluded
+      end
+      
+      # Sets whether the pair should be excluded from generated test cases.
+      def excluded=(value)
+        @excluded = value
+      end        
     end
   end
 end
