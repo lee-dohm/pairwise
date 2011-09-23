@@ -57,4 +57,18 @@ class PairwiseTests < Test::Unit::TestCase
       generate_all_pairs(@left, nil)
     end
   end
+  
+  # Ensures that the all pairs method raises an error when supplied a left list with only one item.
+  def test_generate_all_pairs_raises_when_there_is_only_one_item_in_left_list
+    assert_raise ArgumentError do
+      generate_all_pairs(@left.take(1), @right)
+    end
+  end
+  
+  # Ensures that the all pairs method raises an error when supplied a right list with only one item.
+  def test_generate_all_pairs_raises_when_there_is_only_one_item_in_right_list
+    assert_raise ArgumentError do
+      generate_all_pairs(@left, @right.take(1))
+    end
+  end
 end

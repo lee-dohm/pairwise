@@ -11,8 +11,8 @@ module Test
   module Pairwise
     # Generates all pairs from the two lists.
     def generate_all_pairs(left, right)
-      raise ArgumentError, 'The left list cannot be nil or empty.' if left.nil? || left.empty?
-      raise ArgumentError, 'The right list cannot be nil or empty.' if right.nil? || right.empty?
+      raise ArgumentError, 'The left list cannot be nil and must have at least two items.' if left.nil? || left.length < 2
+      raise ArgumentError, 'The right list cannot be nil and must have at least two items.' if right.nil? || right.length < 2
       
       pairs = []
       
