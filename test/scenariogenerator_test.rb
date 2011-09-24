@@ -11,12 +11,12 @@ class ScenarioGeneratorTests < Test::Unit::TestCase
   
   # Ensures that we can construct a ScenarioGenerator object.
   def test_constructor_happy_path
-    generator = ScenarioGenerator.new({:first => [:one, :two, :three],
-                                       :second => [:foo, :bar, :baz],
-                                       :third => [:eins, :zwei, :drei]})
+    generator = ScenarioGenerator.new(:first => [:one, :two, :three],
+                                      :second => [:foo, :bar, :baz],
+                                      :third => [:eins, :zwei, :drei])
     
-    assert_equal 9, generator.pairs(:first, :second), 'There should be nine generated pairs'
-    assert_equal 9, generator.pairs(:first, :third), 'There should be nine generated pairs'
-    assert_equal 9, generator.pairs(:second, :third), 'There should be nine generated pairs'
+    assert_equal 9, generator.pairs(:first, :second).count, 'There should be nine generated pairs'
+    assert_equal 9, generator.pairs(:first, :third).count, 'There should be nine generated pairs'
+    assert_equal 9, generator.pairs(:second, :third).count, 'There should be nine generated pairs'
   end
 end
