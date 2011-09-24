@@ -1,0 +1,8 @@
+# Git ignores file.
+# 
+# Each line contains a file glob pattern to ignore.
+# Lines starting with a space or a hash (#) are comments.
+# Lines starting with a bang (!) have their pattern negated before matching.
+# Patterns that end with a slash only match directories.
+
+log/
