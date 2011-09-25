@@ -19,7 +19,9 @@ module Test
       end
       
       # Returns the list of all pairs of values for the two parameters.
-      def pairs(*args)
+      def pairs(*args, &block)
+        return @scenario_pairs[args.to_set].select &block unless block.nil?
+        
         @scenario_pairs[args.to_set]
       end
     end

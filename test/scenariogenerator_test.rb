@@ -34,4 +34,18 @@ class ScenarioGeneratorTests < Test::Unit::TestCase
     
     assert_same first_second, second_first, 'The two should be the same object'
   end
+  
+  # Ensures that we can give a selection criteria to the pairs method.
+  def test_pairs_select
+    generator = ScenarioGenerator.new(@test_values)
+    
+    first_second = generator.pairs(:first, :second)
+    first_second[1].covered = true
+    first_second[2].excluded = true
+    uncovered = generator.pairs(:first, :second) { |a| !a.covered? }
+    included = generator.pairs(:first, :second) { |a| !a.excluded? }
+    
+    assert_equal 8, uncovered.count, 'There should only be eight uncovered pairs'
+    assert_equal 8, included.count, 'There should only be eight included pairs'
+  end
 end
