@@ -19,9 +19,8 @@ module Test
       end
       
       # Returns the list of all pairs of values for the two parameters.
-      def pairs(first, second)
-        seekset = Set.new [first, second]
-        @scenario_pairs[seekset]
+      def pairs(*args)
+        @scenario_pairs[args.to_set]
       end
     end
   end
