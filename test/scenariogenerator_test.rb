@@ -4,10 +4,12 @@
 
 require 'test/unit'
 require 'test/pairwise'
+require 'test_helpers'
 
 # Tests for the Test::Pairwise::ScenarioGenerator class.
 class ScenarioGeneratorTests < Test::Unit::TestCase
   include Test::Pairwise
+  include Test::Helpers
   
   # Performs pre-test setup.
   def setup
@@ -47,5 +49,16 @@ class ScenarioGeneratorTests < Test::Unit::TestCase
     
     assert_equal 8, uncovered.count, 'There should only be eight uncovered pairs'
     assert_equal 8, included.count, 'There should only be eight included pairs'
+  end
+  
+  # Ensures that pairs in select mode will return an empty list if there are no matches.
+  def test_pairs_select_returns_an_empty_list_if_none_match
+    generator = ScenarioGenerator.new(@test_values)
+    
+    first_second = generator.pairs(:first, :second)
+    first_second.each { |item| item.covered = true }
+    uncovered = generator.pairs(:first, :second) { |item| !item.covered? }
+    
+    assert_equal true, uncovered.empty?, 'The list was not empty'
   end
 end
