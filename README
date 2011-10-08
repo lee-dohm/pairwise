@@ -7,10 +7,11 @@ See http://www.pairwise.org for more details.
 
 My current approach is to:
 
-# Read the table of dimensions and the associated values.
-# Repeat until all required combinations are covered:
-## Randomly pick values from the dimensions to create a test case.
-## If the test case has covered at least one uncovered combination, store it.
+1. Read the table of dimensions and the associated values.
+1. Repeat until all required combinations are covered:
+    1. Randomly pick values from the dimensions to create a test case.
+    1. If the test case has covered at least one uncovered combination, store 
+       it.
 
 This implementation is expected to be slow and will need to be refined over
 time.
