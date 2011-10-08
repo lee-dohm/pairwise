@@ -20,9 +20,25 @@ describe Engine do
     }.must_raise ArgumentError
   end
   
-  it 'will not accept non-numeric input' do
+  it 'will not accept non-numeric counts of values' do
     proc {
       Engine.new(3, 'foo', 3)
     }.must_raise ArgumentError
+  end
+  
+  it 'will not accept counts less than two' do
+    proc {
+      Engine.new(3, 3, 1)
+    }.must_raise ArgumentError
+  end
+  
+  it 'will generate an array of arrays of indices' do
+    engine = Engine.new(3, 3, 3)
+    
+    cases = engine.generate()
+    cases.each do |c|
+      c.count.must_equal 3
+      (c.all? { |v| v >= 0 && v < 3 }).must_equal true
+    end
   end
 end
