@@ -12,16 +12,33 @@ module Test
           value_counts.count < 2
         raise ArgumentError, 'The value counts must be numeric.' if
           value_counts.any? { |c| !c.respond_to?(:to_int) }
-        raise ArgumentError, 'A count of less than two will not work.' if
+        raise ArgumentError, 'Less than two values in a dimension will not work.' if
           value_counts.any? { |c| c < 2 }
           
         @value_counts = value_counts
         @combinations = required_combinations
       end
       
+      # Gets the set of dimension combinations
+      def dimension_combinations
+        dimensions = (0...@value_counts.count).to_a
+        dimensions.combination(2).to_a
+      end
+      
       # Gets the set of required combinations.
       def required_combinations
+        combos = []
         
+        dimension_combos = self.dimension_combinations
+        dimension_combos.each do |combo|
+          for i in 0...(@value_counts[combo.first]) do
+            for j in 0...(@value_counts[combo.second]) do
+              combos << [i, j]
+            end
+          end
+        end
+        
+        combos
       end
     end
   end
