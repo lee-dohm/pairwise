@@ -3,7 +3,12 @@
 # Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
 
 module Test
-  module Pairwise
+  module Pairwise  
+    # Converts +num+ to a character based on 'a'.
+    def to_char_index(num)
+      (97 + num).chr
+    end
+
     # The pairwise test case generation engine.
     class Engine
       # Initializes a new instance of the +Engine+ class.
@@ -19,6 +24,13 @@ module Test
         @combinations = required_combinations
       end
       
+      # Gets the set of combinations the engine is tracking.
+      def combinations
+        @combinations
+      end
+      
+      private
+      
       # Gets the set of dimension combinations
       def dimension_combinations
         dimensions = (0...@value_counts.count).to_a
@@ -29,11 +41,13 @@ module Test
       def required_combinations
         combos = []
         
-        dimension_combos = self.dimension_combinations
+        dimension_combos = dimension_combinations
         dimension_combos.each do |combo|
           for i in 0...(@value_counts[combo[0]]) do
             for j in 0...(@value_counts[combo[1]]) do
-              combos << [i, j]
+              dim1 = to_char_index(combo[0])
+              dim2 = to_char_index(combo[1])
+              combos << Combination.new(dim1 => i, dim2 => j)
             end
           end
         end

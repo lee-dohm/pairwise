@@ -18,6 +18,13 @@ module Test
         @values[key]
       end
       
+      # Determines equality with another object.
+      def ==(other)
+        @values == other.values &&
+          @covered == other.covered? &&
+          @excluded == other.excluded?
+      end
+      
       # Gets a flag indicating whether the combination has been covered by
       # previous test cases.
       def covered?
@@ -40,6 +47,11 @@ module Test
       # being used in test cases.
       def excluded=(value)
         @excluded = value
+      end
+      
+      # Gets the entire hash of values.
+      def values
+        @values
       end
     end
   end

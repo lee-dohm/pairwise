@@ -42,4 +42,11 @@ describe Combination do
     
     combo.excluded?.must_equal true
   end
+  
+  it 'can determine equality' do
+    combo = Combination.new(:first => 'a', :second => 'b')
+    other = Combination.new(:first => 'a', :second => 'b')
+    
+    combo.must_equal other
+  end
 end

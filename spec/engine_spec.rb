@@ -31,4 +31,10 @@ describe Engine do
       Engine.new(3, 3, 1)
     }.must_raise ArgumentError
   end
+  
+  it 'will calculate the list of required combinations' do
+    engine = Engine.new(2, 2)
+    
+    engine.combinations.must_include Combination.new('a' => 0, 'b' => 0)
+  end
 end
