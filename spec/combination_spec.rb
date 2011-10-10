@@ -49,4 +49,20 @@ describe Combination do
     
     combo.must_equal other
   end
+  
+  it 'must not take exclusion into account on equality' do
+    combo = Combination.new(:first => 'a', :second => 'b')
+    combo.excluded = true
+    other = Combination.new(:first => 'a', :second => 'b')
+    
+    combo.must_equal other
+  end
+  
+  it 'must not take covered into account on equality' do
+    combo = Combination.new(:first => 'a', :second => 'b')
+    combo.covered = true
+    other = Combination.new(:first => 'a', :second => 'b')
+    
+    combo.must_equal other
+  end
 end

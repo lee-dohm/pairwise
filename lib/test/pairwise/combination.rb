@@ -20,9 +20,7 @@ module Test
       
       # Determines equality with another object.
       def ==(other)
-        @values == other.values &&
-          @covered == other.covered? &&
-          @excluded == other.excluded?
+        @values == other.values
       end
       
       # Gets a flag indicating whether the combination has been covered by

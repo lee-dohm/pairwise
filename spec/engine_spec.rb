@@ -41,4 +41,18 @@ describe Engine do
     engine.combinations.must_include Combination.new(:a => 1, :b => 0)
     engine.combinations.must_include Combination.new(:a => 1, :b => 1)
   end
+  
+  it 'will allow covering a combination' do
+    engine = Engine.new(2, 2)
+    engine.cover(:a => 1, :b => 1)
+    
+    engine.combination(:a => 1, :b => 1).covered?.must_equal true
+  end
+  
+  it 'will allow excluding a combination' do
+    engine = Engine.new(2, 2)
+    engine.exclude(:a => 1, :b => 1)
+    
+    engine.combination(:a => 1, :b => 1).excluded?.must_equal true
+  end
 end

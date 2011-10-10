@@ -6,7 +6,13 @@ module Test
   module Pairwise  
     # Converts +num+ to a character based on 'a'.
     def to_char_index(num)
-      ('a'.ord + num).chr.to_sym
+      if RUBY_VERSION =~ /^1\.8/
+        a = "a"[0]
+      else
+        a = 'a'.ord
+      end
+      
+      (a + num).chr.to_sym
     end
 
     # The pairwise test case generation engine.
@@ -24,9 +30,26 @@ module Test
         @combinations = required_combinations
       end
       
+      # Gets the combination that matches the given set of values.
+      def combination(values)
+        match = Combination.new(values)
+        found = @combinations.select { |c| c == match }
+        found[0]
+      end
+      
       # Gets the set of combinations the engine is tracking.
       def combinations
         @combinations
+      end
+      
+      # Marks a particular combination as covered.
+      def cover(values)
+        self.combination(values).covered = true
+      end
+      
+      # Marks a particular combination as excluded.
+      def exclude(values)
+        self.combination(values).excluded = true
       end
       
       private
