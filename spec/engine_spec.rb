@@ -35,6 +35,10 @@ describe Engine do
   it 'will calculate the list of required combinations' do
     engine = Engine.new(2, 2)
     
-    engine.combinations.must_include Combination.new('a' => 0, 'b' => 0)
+    engine.combinations.count.must_equal 4
+    engine.combinations.must_include Combination.new(:a => 0, :b => 0)
+    engine.combinations.must_include Combination.new(:a => 0, :b => 1)
+    engine.combinations.must_include Combination.new(:a => 1, :b => 0)
+    engine.combinations.must_include Combination.new(:a => 1, :b => 1)
   end
 end

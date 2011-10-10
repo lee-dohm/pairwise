@@ -6,7 +6,7 @@ module Test
   module Pairwise  
     # Converts +num+ to a character based on 'a'.
     def to_char_index(num)
-      (97 + num).chr
+      ('a'.ord + num).chr.to_sym
     end
 
     # The pairwise test case generation engine.
