@@ -31,8 +31,8 @@ module Test
         
         dimension_combos = self.dimension_combinations
         dimension_combos.each do |combo|
-          for i in 0...(@value_counts[combo.first]) do
-            for j in 0...(@value_counts[combo.second]) do
+          for i in 0...(@value_counts[combo[0]]) do
+            for j in 0...(@value_counts[combo[1]]) do
               combos << [i, j]
             end
           end
