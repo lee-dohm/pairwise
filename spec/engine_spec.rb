@@ -55,4 +55,19 @@ describe Engine do
     
     engine.combination(:a => 1, :b => 1).excluded?.must_equal true
   end
+  
+  it 'will generate test cases one at a time' do
+    engine = Engine.new(2, 2)
+    test_case = engine.test_case
+    
+    (0..1).must_include test_case[test_case.keys[0]]
+    (0..1).must_include test_case[test_case.keys[1]]
+  end
+  
+  it 'will mark all combinations covered on generated test cases' do
+    engine = Engine.new(2, 2)
+    test_case = engine.test_case
+    
+    engine.combination(test_case).covered?.must_equal true
+  end
 end
