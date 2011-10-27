@@ -6,3 +6,4 @@
 # Patterns that end with a slash only match directories.
 
 log/
+bin/jenny
