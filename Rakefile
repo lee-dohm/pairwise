@@ -9,9 +9,17 @@ require 'rake/clean'
 require 'rake/testtask'
 
 ##### Constants
+BINDIR = 'bin'
+SRCDIR = 'src'
+
+JENNY = "#{BINDIR}/jenny"
+JENNY_SRC = FileList["#{SRCDIR}/jenny/*.c"]
+
+GCC = 'gcc'
 GCC_FLAGS = "-O3"
-SRC = FileList['src/jenny/*.c']
-CLOBBER << FileList['bin/jenny', 'bin']
+
+CLOBBER << JENNY
+CLOBBER << BINDIR
 
 ##### Task definitions
 task :default => [:jenny, :test]
@@ -25,9 +33,9 @@ Rake::TestTask.new do |test|
 end
 
 ##### File definitions
-file 'bin/jenny' => SRC do
-  mkdir 'bin'
-  sh "gcc #{GCC_FLAGS} -o bin/jenny #{SRC}"
+file JENNY => JENNY_SRC do
+  mkpath BINDIR
+  sh "#{GCC} #{GCC_FLAGS} -o #{JENNY} #{JENNY_SRC}"
 end
 
 
