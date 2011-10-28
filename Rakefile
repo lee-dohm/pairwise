@@ -10,10 +10,10 @@ require 'rake/testtask'
 
 ##### Constants
 BINDIR = 'bin'
-SRCDIR = 'src'
+VNDDIR = 'vendor'
 
 JENNY = "#{BINDIR}/jenny"
-JENNY_SRC = FileList["#{SRCDIR}/jenny/*.c"]
+JENNY_SRC = FileList["#{VNDDIR}/jenny/*.c"]
 
 GCC = 'gcc'
 GCC_FLAGS = "-O3"
