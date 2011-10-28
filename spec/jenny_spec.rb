@@ -11,6 +11,21 @@ require 'pairwise'
 include Test::Pairwise
 
 describe Jenny do
+  OUTPUT = <<-EOF
+ 1a 2a 3c 4a 
+ 1b 2c 3b 4c 
+ 1c 2b 3a 4b 
+ 1a 2b 3c 4c 
+ 1b 2a 3a 4c 
+ 1c 2a 3b 4a 
+ 1a 2c 3b 4b 
+ 1b 2b 3c 4b 
+ 1c 2c 3a 4a 
+ 1c 2c 3c 4c 
+ 1b 2b 3b 4a 
+ 1a 2a 3a 4b
+EOF
+
   it 'can format basic parameters' do
     args = Jenny::parameters(:foo => ['a', 'b', 'c'], :bar => ['1', '2', '3', '4'])
 
@@ -56,5 +71,19 @@ describe Jenny do
     proc {
       Jenny::parameters(hash)
     }.must_raise ArgumentError
+  end
+  
+  it 'can parse the output of Jenny into a more readable form' do
+    hash = {'English' => ['one', 'two', 'three'], 
+            'German' => ['eins', 'zwei', 'drei'],
+            'Japanese' => ['ichi', 'ni', 'san'],
+            'Spanish' => ['uno', 'dos', 'tres']}
+            
+    results = Jenny::parse(OUTPUT, hash)
+    
+    results[0]['English'].must_equal 'one'
+    results[0]['German'].must_equal 'eins'
+    results[0]['Japanese'].must_equal 'san'
+    results[0]['Spanish'].must_equal 'uno'
   end
 end

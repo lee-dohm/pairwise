@@ -6,6 +6,8 @@ module Test
   module Pairwise
     # Interface methods for working with the Jenny pairwise-testing utility.
     module Jenny
+      KEYS_TO_REMOVE = [:number]
+      
       # Formats the parameters from the given values.
       def self.parameters(options)
         args = []
@@ -16,23 +18,67 @@ module Test
               
           num = options[:number].to_i
           args << "-n#{num}"
-          options.delete(:number)
         else
           args << '-n2'
         end
         
-        raise ArgumentError, "The number of dimensions is too large." unless options.keys.count <= 65535
+        dimensions = remove_options(options)
+        
+        raise ArgumentError, "The number of dimensions is too large." unless dimensions.keys.count <= 65535
           
-        options.keys.each do |k|
+        dimensions.keys.each do |k|
           raise ArgumentError, "There doesn't appear to be more than one value in dimension #{k}." \
             unless options[k].is_a? Enumerable
           raise ArgumentError, "The number of values in dimension #{k} is too large." \
             unless options[k].count <= 52
             
-          args << options[k].count.to_s
+          args << dimensions[k].count.to_s
         end
         
         args
+      end
+      
+      def self.parse(output, options)
+        dimensions = remove_options(options)
+
+        results = []
+        lines = output.split("\n")        
+        lines.each do |line|
+          items = line.split(" ")
+          
+          result = {}
+          items.each do |item|
+            item.chomp!
+            if (item.length > 0) then
+              dimension = (item[0..-2]).to_i - 1
+              value = value_map(item[-1])
+              key = dimensions.keys[dimension]
+              result[key] = dimensions[key][value]
+            end
+          end
+          
+          results << result
+        end
+        
+        results
+      end
+      
+      # Removes the option keys from the hash so all we're left with is the dimensions.
+      def self.remove_options(options)
+        dimensions = {}
+        dimensions.replace(options)
+        dimensions.delete_if { |key, value| KEYS_TO_REMOVE.include?(key) }
+        dimensions
+      end
+      
+      def self.value_map(char)
+        if char.ord >= 'a'.ord && char.ord <= 'z'.ord then
+          char.ord - 'a'.ord
+        elsif char.ord >= 'A'.ord && char.ord <= 'Z'.ord then
+          char.ord - 'A'.ord + 26
+        else
+          raise ArgumentError
+        end
       end
     end
   end
