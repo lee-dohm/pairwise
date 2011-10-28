@@ -19,7 +19,6 @@ GCC = 'gcc'
 GCC_FLAGS = "-O3"
 
 CLOBBER << JENNY
-CLOBBER << BINDIR
 
 ##### Task definitions
 task :default => [:jenny, :test]
@@ -27,7 +26,6 @@ task :default => [:jenny, :test]
 task :jenny => ['bin/jenny']
 
 Rake::TestTask.new do |test|
-  desc 'Run all tests'
   test.libs << ['test', 'spec']
   test.test_files = Dir['test/*_test.rb', 'spec/*_spec.rb']
 end
