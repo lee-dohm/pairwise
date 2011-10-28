@@ -25,9 +25,19 @@ task :default => [:jenny, :test]
 
 task :jenny => ['bin/jenny']
 
+desc 'Run all tests'
+task :test => [:unit_test, :spec]
+
 Rake::TestTask.new do |test|
-  test.libs << ['test', 'spec']
-  test.test_files = Dir['test/*_test.rb', 'spec/*_spec.rb']
+  test.name = 'unit_test'
+  test.libs << ['test']
+  test.test_files = Dir['test/*_test.rb']
+end
+
+Rake::TestTask.new do |spec|
+  spec.name = 'spec'
+  spec.libs << ['spec']
+  spec.test_files = Dir['spec/*_spec.rb']
 end
 
 ##### File definitions
