@@ -83,8 +83,8 @@ module Test
       
       # Gets the ordinal value of the character.
       def self.ord(char)
-        if char.is_a? Fixnum then
-          char
+        if char.is_a?(Fixnum) then
+          return char
         end
         
         if RUBY_VERSION =~ /^1\.8/ then
