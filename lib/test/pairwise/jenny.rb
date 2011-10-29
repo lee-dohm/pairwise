@@ -72,12 +72,25 @@ module Test
       end
       
       def self.value_map(char)
-        if char.ord >= 'a'.ord && char.ord <= 'z'.ord then
-          char.ord - 'a'.ord
-        elsif char.ord >= 'A'.ord && char.ord <= 'Z'.ord then
-          char.ord - 'A'.ord + 26
+        if ord(char) >= ord('a') && ord(char) <= ord('z') then
+          ord(char) - ord('a')
+        elsif ord(char) >= ord('A') && ord(char) <= ord('Z') then
+          ord(char) - ord('A') + 26
         else
-          raise ArgumentError
+          raise ArgumentError, "The value '#{char}' could not be converted."
+        end
+      end
+      
+      # Gets the ordinal value of the character.
+      def self.ord(char)
+        if char.is_a? Fixnum then
+          char
+        end
+        
+        if RUBY_VERSION =~ /^1\.8/ then
+          char[0]
+        else
+          char.ord
         end
       end
     end
