@@ -26,7 +26,8 @@ module Test
         
         raise ArgumentError, "The number of dimensions is too large." unless dimensions.keys.count <= 65535
           
-        dimensions.keys.each do |k|
+        sorted_keys = dimensions.keys.sort
+        sorted_keys.each do |k|
           raise ArgumentError, "There doesn't appear to be more than one value in dimension #{k}." \
             unless options[k].is_a? Enumerable
           raise ArgumentError, "The number of values in dimension #{k} is too large." \
@@ -40,6 +41,7 @@ module Test
       
       def self.parse(output, options)
         dimensions = remove_options(options)
+        sorted_keys = dimensions.keys.sort
 
         results = []
         lines = output.split("\n")        
@@ -52,7 +54,7 @@ module Test
             if (item.length > 0) then
               dimension = (item[0..-2]).to_i - 1
               value = value_map(item[-1])
-              key = dimensions.keys[dimension]
+              key = sorted_keys[dimension]
               result[key] = dimensions[key][value]
             end
           end
@@ -83,7 +85,7 @@ module Test
       
       # Gets the ordinal value of the character.
       def self.ord(char)
-        if char.is_a?(Fixnum) then
+        if char.is_a? Fixnum then
           return char
         end
         
