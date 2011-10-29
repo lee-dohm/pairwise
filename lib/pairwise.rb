@@ -3,6 +3,7 @@
 # 
 
 require 'rubygems'
+require 'test/pairwise/engine'
 require 'test/pairwise/jenny'
 
 # Represents an error in the arguments passed to a method.
