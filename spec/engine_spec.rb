@@ -14,4 +14,10 @@ describe Engine do
   it 'can be constructed' do
     Engine.new
   end
+  
+  it 'will accept a filename argument' do
+    engine = Engine.new('filename.txt')
+    
+    engine.input_file.must_equal 'filename.txt'
+  end
 end
