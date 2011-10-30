@@ -11,10 +11,6 @@ require 'pairwise'
 include Test::Pairwise
 
 describe Engine do
-  it 'can be constructed' do
-    Engine.new
-  end
-  
   it 'will accept a filename argument' do
     engine = Engine.new('filename.txt')
     
