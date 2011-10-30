@@ -9,7 +9,7 @@ module Test
     # The command-line interface for the pairwise tool.
     class Engine
       # Initializes a new instance of the +Engine+ class from the supplied command-line arguments.
-      def initialize(args)
+      def initialize(*args)
         parse_arguments(args)
       end
       
@@ -20,7 +20,7 @@ module Test
       
       # Parses the arguments supplied on the command line.
       def parse_arguments(args)
-        @input_file = Pathname.new(args)
+        @input_file = Pathname.new(args[0])
       end
       private :parse_arguments
     end
