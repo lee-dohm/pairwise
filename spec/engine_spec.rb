@@ -16,4 +16,10 @@ describe Engine do
     
     engine.input_file.must_equal 'filename.txt'
   end
+  
+  it 'will have a default output filename' do
+    engine = Engine.new('filename.txt')
+    
+    engine.output_file.must_equal 'testcases.txt'
+  end
 end

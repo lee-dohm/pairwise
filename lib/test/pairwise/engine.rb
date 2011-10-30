@@ -18,9 +18,15 @@ module Test
         @input_file.to_s
       end
       
+      # Gets the output file path.
+      def output_file
+        @output_file.to_s
+      end
+      
       # Parses the arguments supplied on the command line.
       def parse_arguments(args)
         @input_file = Pathname.new(args[0])
+        @output_file = Pathname.new('testcases.txt')
       end
       private :parse_arguments
     end
