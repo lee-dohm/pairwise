@@ -29,9 +29,9 @@ module Test
         @output_file = Pathname.new('testcases.txt')
 
         opts = OptionParser.new do |opts|
-          opts.banner = 'Usage: pairwise [options]'
+          opts.banner = 'Usage: pairwise FILENAME [options]'
           
-          opts.on('--output FILENAME', 'Write the output to FILENAME') do |output|
+          opts.on('-o', '--output FILENAME', 'Write the output to FILENAME') do |output|
             @output_file = Pathname.new(output)
           end
           
@@ -44,7 +44,7 @@ module Test
           end
           
           opts.on_tail('--version', 'Show version.') do
-            puts VERSION.join('.')
+            puts version_text
             exit
           end
         end
@@ -56,6 +56,17 @@ module Test
         @input_file = Pathname.new(args[0])
       end
       private :parse_arguments
+      
+      # Puts together the version text from various constants.
+      def version_text
+        items = []
+        items << "#{PRODUCT_NAME}"
+        items << "#{VERSION.join('.')}"
+        items << "by #{AUTHOR}"
+        items << "(#{AUTHOR_EMAIL})" if AUTHOR_EMAIL
+        items.join(' ')
+      end
+      private :version_text
     end
   end
 end

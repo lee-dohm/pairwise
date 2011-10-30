@@ -29,6 +29,12 @@ describe Engine do
     engine.output_file.must_equal 'foo.txt'
   end
   
+  it 'will accept a short output file parameter' do
+    engine = Engine.new('filename.txt', '-o', 'foo.txt')
+    
+    engine.output_file.must_equal 'foo.txt'
+  end
+  
   it 'will raise an error when more than one input file is supplied' do
     proc {
       Engine.new('foo.txt', 'bar.txt')
