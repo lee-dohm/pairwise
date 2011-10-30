@@ -22,4 +22,22 @@ describe Engine do
     
     engine.output_file.must_equal 'testcases.txt'
   end
+  
+  it 'will accept an output file parameter' do
+    engine = Engine.new('filename.txt', '--output', 'foo.txt')
+    
+    engine.output_file.must_equal 'foo.txt'
+  end
+  
+  it 'will raise an error when more than one input file is supplied' do
+    proc {
+      Engine.new('foo.txt', 'bar.txt')
+    }.must_raise ArgumentError
+  end
+  
+  it 'will raise an error when no input file is specified' do
+    proc {
+      Engine.new()
+    }.must_raise ArgumentError
+  end
 end

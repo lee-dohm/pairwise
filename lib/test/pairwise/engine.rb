@@ -2,6 +2,7 @@
 # Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
 # 
 
+require 'optparse'
 require 'pathname'
 
 module Test
@@ -25,8 +26,34 @@ module Test
       
       # Parses the arguments supplied on the command line.
       def parse_arguments(args)
-        @input_file = Pathname.new(args[0])
         @output_file = Pathname.new('testcases.txt')
+
+        opts = OptionParser.new do |opts|
+          opts.banner = 'Usage: pairwise [options]'
+          
+          opts.on('--output FILENAME', 'Write the output to FILENAME') do |output|
+            @output_file = Pathname.new(output)
+          end
+          
+          opts.separator ''
+          opts.separator 'Common options:'
+          
+          opts.on_tail('-h', '--help', 'Show this message.') do
+            puts opts
+            exit
+          end
+          
+          opts.on_tail('--version', 'Show version.') do
+            puts VERSION.join('.')
+            exit
+          end
+        end
+        opts.parse!(args)
+
+        raise ArgumentError, "Must specify an input file" if args.count < 1
+        raise ArgumentError, "There can be only one input file" if args.count > 1
+        
+        @input_file = Pathname.new(args[0])
       end
       private :parse_arguments
     end
