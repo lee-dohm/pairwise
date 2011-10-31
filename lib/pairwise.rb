@@ -13,8 +13,8 @@ module Test
   module Pairwise
     AUTHOR = 'Lee Dohm'
     AUTHOR_EMAIL = 'lee@liftedstudios.com'
+    JENNY_PATH = Pathname.new(File.expand_path(File.dirname(File.dirname(__FILE__)))) + 'bin' + 'jenny'
     PRODUCT_NAME = 'pairwise'
     VERSION = [0, 9]
-    JENNY_PATH = Pathname.new(File.expand_path(File.dirname(File.dirname(__FILE__)))) + 'bin' + 'jenny'
   end
 end
