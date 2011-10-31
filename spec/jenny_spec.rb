@@ -3,7 +3,7 @@
 # 
 
 require 'rubygems'
-require 'minitest/spec'
+gem 'minitest'
 require 'minitest/autorun'
 
 require 'pairwise'

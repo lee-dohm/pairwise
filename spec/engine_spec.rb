@@ -4,7 +4,7 @@
 
 require 'rubygems'
 
-require 'minitest/spec'
+gem 'minitest'
 require 'minitest/autorun'
 require 'tempfile'
 
@@ -69,7 +69,7 @@ TEXT
   # it 'will output version text' do
   #   proc {
   #     Engine.new('--version')
-  #   }.must_output "pairwise v0.5 by Lee Dohm (lee@liftedstudios.com)"
+  #   }.must_output "pairwise v0.5 by Lee Dohm (lee@liftedstudios.com)\n"
   # end
   
   it 'will accept a comma-delimited text file' do
