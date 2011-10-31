@@ -15,6 +15,7 @@ module Test
         read_input_file
       end
       
+      # Gets the parameter hash to be given to the Jenny utility.
       def hash
         @hash
       end
@@ -27,6 +28,18 @@ module Test
       # Gets the output file path, if it exists.
       def output_file
         @output_file ? @output_file.to_s : nil
+      end
+      
+      # Gets the results of the run.
+      def results
+        @results
+      end
+      
+      # Executes the Jenny utility to perform the heavy lifting.
+      def run
+        args = Jenny::parameters(@hash)
+        output = Jenny::execute(args)
+        @results = Jenny::parse(output, @hash)
       end
       
       # Parses the arguments supplied on the command line.

@@ -8,6 +8,11 @@ module Test
     module Jenny
       KEYS_TO_REMOVE = [:number]
       
+      # Executes the Jenny utility with the given arguments.
+      def self.execute(args)
+        `#{JENNY_PATH} #{args.join(' ')}`
+      end
+      
       # Formats the parameters from the given values.
       def self.parameters(options)
         args = []

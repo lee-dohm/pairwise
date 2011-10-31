@@ -14,6 +14,7 @@ module Test
     AUTHOR = 'Lee Dohm'
     AUTHOR_EMAIL = 'lee@liftedstudios.com'
     PRODUCT_NAME = 'pairwise'
-    VERSION = [0, 5]
+    VERSION = [0, 9]
+    JENNY_PATH = Pathname.new(File.expand_path(File.dirname(File.dirname(__FILE__)))) + 'bin' + 'jenny'
   end
 end

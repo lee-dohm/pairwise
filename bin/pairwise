@@ -8,5 +8,6 @@ require 'pairwise'
 include Test::Pairwise
 
 if File.identical?($0, __FILE__) then
-  Engine.new(*ARGV)
+  engine = Engine.new(*ARGV)
+  engine.run
 end

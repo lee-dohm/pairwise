@@ -79,4 +79,16 @@ TEXT
     engine.hash['English'].wont_be_nil
     engine.hash['English'].must_equal ['one', 'two', 'three']
   end
+  
+  it 'will execute the Jenny utility and parse the results' do
+    engine = Engine.new(@sample_file.path)
+    
+    engine.run
+    
+    results = engine.results
+    results[0]['English'].must_equal 'one'
+    results[0]['German'].must_equal 'eins'
+    results[0]['Japanese'].must_equal 'san'
+    results[0]['Spanish'].must_equal 'uno'
+  end
 end
