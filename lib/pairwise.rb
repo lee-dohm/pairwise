@@ -2,7 +2,6 @@
 # Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
 # 
 
-require 'rubygems'
 require 'test/pairwise/engine'
 require 'test/pairwise/jenny'
 
