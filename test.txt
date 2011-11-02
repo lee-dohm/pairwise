@@ -1,0 +1,4 @@
+English,one,two,three
+German,eins,zwei,drei
+Japanese,ichi,ni,san
+Spanish,uno,dos,tres

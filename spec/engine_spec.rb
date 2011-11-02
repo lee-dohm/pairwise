@@ -56,19 +56,19 @@ TEXT
   
   it 'will raise an error when more than one input file is supplied' do
     proc {
-      engine = Engine.new('foo.txt', 'bar.txt')
+      Engine.new('foo.txt', 'bar.txt')
     }.must_raise ArgumentError
   end
   
   it 'will raise an error when no input file is specified' do
     proc {
-      engine = Engine.new
+      Engine.new
     }.must_raise ArgumentError
   end
   
   it 'will output version text' do
     proc {
-      engine = Engine.new('--version')
+      Engine.new('--version')
     }.must_output "pairwise v0.9 by Lee Dohm (lee@liftedstudios.com)\n"
   end
   
