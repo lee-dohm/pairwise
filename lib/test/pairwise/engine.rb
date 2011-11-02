@@ -11,8 +11,9 @@ module Test
     class Engine
       # Initializes a new instance of the +Engine+ class from the supplied command-line arguments.
       def initialize(*args)
-        parse_arguments(args)
-        read_input_file
+        if parse_arguments(args) then
+          read_input_file
+        end
       end
       
       # Gets the parameter hash to be given to the Jenny utility.
@@ -46,7 +47,7 @@ module Test
       def parse_arguments(args)
         @output_file = nil
 
-        opts = OptionParser.new do |opts|
+        options = OptionParser.new do |opts|
           opts.banner = 'Usage: pairwise FILENAME [options]'
           
           opts.on('-o', '--output FILENAME', 'Write the output to FILENAME') do |output|
@@ -58,20 +59,21 @@ module Test
           
           opts.on_tail('-h', '--help', 'Show this message.') do
             puts opts
-            exit
+            return false
           end
           
           opts.on_tail('--version', 'Show version.') do
             puts version_text
-            exit
+            return false
           end
         end
-        opts.parse!(args)
+        options.parse!(args)
 
         raise ArgumentError, "Must specify an input file" if args.count < 1
         raise ArgumentError, "There can be only one input file" if args.count > 1
         
         @input_file = Pathname.new(args[0])
+        true
       end
       private :parse_arguments
       
@@ -95,7 +97,7 @@ module Test
       def version_text
         items = []
         items << "#{PRODUCT_NAME}"
-        items << "#{VERSION.join('.')}"
+        items << "v#{VERSION.join('.')}"
         items << "by #{AUTHOR}"
         items << "(#{AUTHOR_EMAIL})" if AUTHOR_EMAIL
         items.join(' ')

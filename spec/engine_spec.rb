@@ -56,21 +56,21 @@ TEXT
   
   it 'will raise an error when more than one input file is supplied' do
     proc {
-      Engine.new('foo.txt', 'bar.txt')
+      engine = Engine.new('foo.txt', 'bar.txt')
     }.must_raise ArgumentError
   end
   
   it 'will raise an error when no input file is specified' do
     proc {
-      Engine.new
+      engine = Engine.new
     }.must_raise ArgumentError
   end
   
-  # it 'will output version text' do
-  #   proc {
-  #     Engine.new('--version')
-  #   }.must_output "pairwise v0.5 by Lee Dohm (lee@liftedstudios.com)\n"
-  # end
+  it 'will output version text' do
+    proc {
+      engine = Engine.new('--version')
+    }.must_output "pairwise v0.9 by Lee Dohm (lee@liftedstudios.com)\n"
+  end
   
   it 'will accept a comma-delimited text file' do
     engine = Engine.new(@sample_file.path)
