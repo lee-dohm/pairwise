@@ -1,0 +1,13 @@
+English,German,Japanese,Spanish
+one,eins,san,uno
+two,drei,ni,tres
+three,zwei,ichi,dos
+one,zwei,san,tres
+two,eins,ichi,tres
+three,eins,ni,uno
+one,drei,ni,dos
+two,zwei,san,dos
+three,drei,ichi,uno
+three,drei,san,tres
+two,zwei,ni,uno
+one,eins,ichi,dos
