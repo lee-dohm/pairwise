@@ -51,23 +51,13 @@ module Test
         begin
           file.puts(keys.join(','))
           @results.each do |row|
-            items = items_for_keys(row, keys)
+            items = row.values_at(*keys)
             file.puts(items.join(','))
           end
         ensure
           file.close
         end
       end
-      
-      # Returns the items for the given keys as an array.
-      def items_for_keys(hash, keys)
-        items = []
-        keys.each do |key|
-          items << hash[key]
-        end
-        items
-      end
-      private :items_for_keys
       
       # Parses the arguments supplied on the command line.
       def parse_arguments(args)
