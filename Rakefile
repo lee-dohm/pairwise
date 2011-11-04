@@ -15,8 +15,8 @@ VNDDIR = 'vendor'
 JENNY = "#{BINDIR}/jenny"
 JENNY_SRC = FileList["#{VNDDIR}/jenny/*.c"]
 
-GCC = 'gcc'
-GCC_FLAGS = "-O3"
+CC = 'gcc'
+CC_FLAGS = "-O3"
 
 CLOBBER << JENNY
 
@@ -45,7 +45,7 @@ end
 ##### File definitions
 file JENNY => JENNY_SRC do
   mkpath BINDIR
-  sh "#{GCC} #{GCC_FLAGS} -o #{JENNY} #{JENNY_SRC}"
+  sh "#{CC} #{CC_FLAGS} -o #{JENNY} #{JENNY_SRC}"
 end
 
 
