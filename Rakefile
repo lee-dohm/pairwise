@@ -23,7 +23,7 @@ CLOBBER << JENNY
 ##### Task definitions
 task :default => [:jenny, :test]
 
-task :jenny => ['bin/jenny']
+task :jenny => [JENNY]
 
 desc 'Run all tests'
 task :test => [:unit_test, :spec]
