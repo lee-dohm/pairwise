@@ -39,6 +39,7 @@ module Test
       # Parses the arguments supplied on the command line.
       def parse_arguments
         @output_file = nil
+        @execute = nil
 
         options = OptionParser.new do |opts|
           opts.banner = 'Usage: pairwise FILENAME [options]'
