@@ -25,48 +25,58 @@ describe Engine do
   
   it 'will accept a filename argument' do
     engine = Engine.new(@sample_file.to_s)
+    engine.parse_arguments
     
     engine.input_file.must_equal @sample_file.to_s
   end
   
   it 'default to writing to stdout' do
     engine = Engine.new(@sample_file.to_s)
+    engine.parse_arguments
     
     engine.output_file.must_be_nil
   end
   
   it 'will accept an output file parameter' do
     engine = Engine.new(@sample_file.to_s, '--output', 'foo.txt')
+    engine.parse_arguments
     
     engine.output_file.must_equal 'foo.txt'
   end
   
   it 'will accept a short output file parameter' do
     engine = Engine.new(@sample_file.to_s, '-o', 'foo.txt')
+    engine.parse_arguments
     
     engine.output_file.must_equal 'foo.txt'
   end
   
   it 'will raise an error when more than one input file is supplied' do
+    engine = Engine.new('foo.txt', 'bar.txt')
     proc {
-      Engine.new('foo.txt', 'bar.txt')
+      engine.parse_arguments
     }.must_raise ArgumentError
   end
   
   it 'will raise an error when no input file is specified' do
+    engine = Engine.new
     proc {
-      Engine.new
+      engine.parse_arguments
     }.must_raise ArgumentError
   end
   
   it 'will output version text' do
+    engine = Engine.new('--version')
+    
     proc {
-      Engine.new('--version')
+      engine.run
     }.must_output "pairwise v0.9 by Lee Dohm (lee@liftedstudios.com)\n"
   end
   
   it 'will accept a comma-delimited text file' do
     engine = Engine.new(@sample_file.to_s)
+    engine.parse_arguments
+    engine.read_input
     
     engine.hash[:number].must_be_nil
     engine.hash['English'].wont_be_nil
@@ -75,8 +85,9 @@ describe Engine do
   
   it 'will execute the Jenny utility and parse the results' do
     engine = Engine.new(@sample_file.to_s)
-    
-    engine.run
+    engine.parse_arguments
+    engine.read_input
+    engine.generate_results
     
     results = engine.results
     results[0]['English'].must_equal 'one'
@@ -87,10 +98,9 @@ describe Engine do
   
   it 'will translate the results to comma-delimited text and write it out' do
     engine = Engine.new(@sample_file.to_s)
-    engine.run
     
     proc {
-      engine.write
+      engine.run
     }.must_output TEST_OUTPUT
   end
 end

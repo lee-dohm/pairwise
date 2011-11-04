@@ -10,5 +10,4 @@ include Test::Pairwise
 if File.identical?($0, __FILE__) then
   engine = Engine.new(*ARGV)
   engine.run
-  engine.write
 end

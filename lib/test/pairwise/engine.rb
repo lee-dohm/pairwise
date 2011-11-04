@@ -11,9 +11,14 @@ module Test
     class Engine
       # Initializes a new instance of the +Engine+ class from the supplied command-line arguments.
       def initialize(*args)
-        if parse_arguments(args) then
-          read_input_file
-        end
+        @arguments = args
+      end
+      
+      # Generates the resulting test cases and stores them.
+      def generate_results
+        args = Jenny::parameters(@hash)
+        output = Jenny::execute(args)
+        @results = Jenny::parse(output, @hash)
       end
       
       # Gets the parameter hash to be given to the Jenny utility.
@@ -31,36 +36,8 @@ module Test
         @output_file ? @output_file.to_s : nil
       end
       
-      # Gets the results of the run.
-      def results
-        @results
-      end
-      
-      # Executes the Jenny utility to perform the heavy lifting.
-      def run
-        args = Jenny::parameters(@hash)
-        output = Jenny::execute(args)
-        @results = Jenny::parse(output, @hash)
-      end
-      
-      # Writes the results to the appropriate stream.
-      def write
-        file = self.output_file ? File.open(self.output_file, 'w') : $stdout
-        keys = @results[0].keys.sort
-        
-        begin
-          file.puts(keys.join(','))
-          @results.each do |row|
-            items = row.values_at(*keys)
-            file.puts(items.join(','))
-          end
-        ensure
-          file.close
-        end
-      end
-      
       # Parses the arguments supplied on the command line.
-      def parse_arguments(args)
+      def parse_arguments
         @output_file = nil
 
         options = OptionParser.new do |opts|
@@ -75,25 +52,25 @@ module Test
           
           opts.on_tail('-h', '--help', 'Show this message.') do
             puts opts
-            return false
+            return
           end
           
           opts.on_tail('--version', 'Show version.') do
             puts version_text
-            return false
+            return
           end
         end
-        options.parse!(args)
+        options.parse!(@arguments)
 
-        raise ArgumentError, "Must specify an input file" if args.count < 1
-        raise ArgumentError, "There can be only one input file" if args.count > 1
+        @execute = true
+
+        raise ArgumentError, "Must specify an input file" if @arguments.count < 1
+        raise ArgumentError, "There can be only one input file" if @arguments.count > 1
         
-        @input_file = Pathname.new(args[0])
-        true
+        @input_file = Pathname.new(@arguments[0])
       end
-      private :parse_arguments
       
-      def read_input_file
+      def read_input
         @hash = {}
         
         lines = []
@@ -107,7 +84,38 @@ module Test
           hash[items[0]] = items[1..-1]
         end
       end
-      private :read_input_file
+      
+      # Gets the results of the run.
+      def results
+        @results
+      end
+      
+      # Executes the normal command-line flow for the +Engine+.
+      def run
+        parse_arguments
+        
+        if @execute then
+          read_input
+          generate_results
+          write_output
+        end
+      end
+      
+      # Writes the results to the appropriate stream.
+      def write_output
+        file = self.output_file ? File.open(self.output_file, 'w') : $stdout
+        keys = @results[0].keys.sort
+        
+        begin
+          file.puts(keys.join(','))
+          @results.each do |row|
+            items = row.values_at(*keys)
+            file.puts(items.join(','))
+          end
+        ensure
+          file.close
+        end
+      end
       
       # Puts together the version text from various constants.
       def version_text
