@@ -1,7 +1,7 @@
 #
 # Build file for the pairwise gem.
 # 
-# Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
+# Copyright:: Copyright (c) 2011-2012 by Lifted Studios.  All Rights Reserved.
 # 
 
 require 'rubygems'
@@ -21,25 +21,17 @@ CC_FLAGS = "-O3"
 CLOBBER << JENNY
 
 ##### Task definitions
-task :default => [:jenny, :test]
+task :default => [:jenny, :test, :yard]
 
 task :jenny => [JENNY]
 
 desc 'Run all tests'
-task :test => [:unit_test, :spec]
+task :test => [:spec]
 
-Rake::TestTask.new do |test|
-  test.name = 'unit_test'
-  test.libs << ['test']
-  test.warning = true
-  test.test_files = Dir['test/*_test.rb']
-end
-
-Rake::TestTask.new do |spec|
-  spec.name = 'spec'
-  spec.libs << ['spec']
-  spec.warning = true
-  spec.test_files = Dir['spec/*_spec.rb']
+Rake::TestTask.new('spec') do |t|
+  t.libs << ['t']
+  t.warning = true
+  t.test_files = Dir['spec/*_spec.rb']
 end
 
 ##### File definitions
@@ -47,5 +39,3 @@ file JENNY => JENNY_SRC do
   mkpath BINDIR
   sh "#{CC} #{CC_FLAGS} -o #{JENNY} #{JENNY_SRC}"
 end
-
-

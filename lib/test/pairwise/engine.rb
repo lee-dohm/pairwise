@@ -42,7 +42,7 @@ module Test
         @execute = nil
 
         options = OptionParser.new do |opts|
-          opts.banner = 'Usage: pairwise FILENAME [options]'
+          opts.banner = 'Usage: #{opts.program_name} FILENAME [options]'
           
           opts.on('-o', '--output FILENAME', 'Write the output to FILENAME') do |output|
             @output_file = Pathname.new(output)
