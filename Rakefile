@@ -21,7 +21,7 @@ CC_FLAGS = "-O3"
 CLOBBER << JENNY
 
 ##### Task definitions
-task :default => [:jenny, :test, :yard]
+task :default => [:jenny, :test]
 
 task :jenny => [JENNY]
 
@@ -29,7 +29,7 @@ desc 'Run all tests'
 task :test => [:spec]
 
 Rake::TestTask.new('spec') do |t|
-  t.libs << ['t']
+  t.libs << ['spec']
   t.warning = true
   t.test_files = Dir['spec/*_spec.rb']
 end

@@ -6,8 +6,10 @@ require 'rubygems'
 
 gem 'minitest'
 
-require 'helpers'
+require 'minitest/spec'
 require 'minitest/autorun'
+
+require 'helpers'
 require 'tempfile'
 
 require 'pairwise'
