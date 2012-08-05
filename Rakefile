@@ -1,3 +1,5 @@
+#!/usr/bin/env rake
+
 #
 # Build file for the pairwise gem.
 # 
@@ -5,10 +7,12 @@
 # 
 
 require 'rubygems'
+
+require 'bundler/gem_tasks'
 require 'rake/clean'
 require 'rake/testtask'
+require 'yard'
 
-##### Constants
 BINDIR = 'bin'
 VNDDIR = 'vendor'
 
@@ -18,14 +22,14 @@ JENNY_SRC = FileList["#{VNDDIR}/jenny/*.c"]
 CC = 'gcc'
 CC_FLAGS = "-O3"
 
-CLOBBER << JENNY
+CLEAN.include('.yardoc')
+CLOBBER.include('doc', 'pkg', JENNY)
 
-##### Task definitions
-task :default => [:jenny, :test]
+task :default => [:jenny, :test, :yard]
 
 task :jenny => [JENNY]
 
-desc 'Run all tests'
+desc 'Execute all tests'
 task :test => [:spec]
 
 Rake::TestTask.new('spec') do |t|
@@ -34,7 +38,8 @@ Rake::TestTask.new('spec') do |t|
   t.test_files = Dir['spec/*_spec.rb']
 end
 
-##### File definitions
+YARD::Rake::YardocTask.new
+
 file JENNY => JENNY_SRC do
   mkpath BINDIR
   sh "#{CC} #{CC_FLAGS} -o #{JENNY} #{JENNY_SRC}"

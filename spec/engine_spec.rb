@@ -72,7 +72,7 @@ describe Engine do
     
     proc {
       engine.run
-    }.must_output "pairwise v0.9 by Lee Dohm (lee@liftedstudios.com)\n"
+    }.must_output "lifted-pairwise v0.9.0 by Lee Dohm (lee@liftedstudios.com)\n"
   end
   
   it 'will accept a comma-delimited text file' do

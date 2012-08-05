@@ -7,3 +7,5 @@
 
 log/
 bin/jenny
+.yardoc
+doc

@@ -121,8 +121,8 @@ module Test
       # Puts together the version text from various constants.
       def version_text
         items = []
-        items << "#{PRODUCT_NAME}"
-        items << "v#{VERSION.join('.')}"
+        items << "#{GEM_NAME}"
+        items << "v#{VERSION}"
         items << "by #{AUTHOR}"
         items << "(#{AUTHOR_EMAIL})" if AUTHOR_EMAIL
         items.join(' ')
