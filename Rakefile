@@ -1,5 +1,5 @@
 #
-# Build file for the pairwise gem.
+# Build file for the lifted-pairwise gem.
 # 
 # Copyright:: Copyright (c) 2011-2012 by Lifted Studios.  All Rights Reserved.
 # 
