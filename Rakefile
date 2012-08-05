@@ -1,5 +1,3 @@
-#!/usr/bin/env rake
-
 #
 # Build file for the pairwise gem.
 # 
