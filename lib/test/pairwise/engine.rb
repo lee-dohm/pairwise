@@ -1,5 +1,5 @@
 # 
-# Copyright:: Copyright (c) 2011 by Lifted Studios.  All Rights Reserved.
+# Copyright:: Copyright (c) 2011-2013 by Lifted Studios.  All Rights Reserved.
 # 
 
 require 'optparse'
@@ -9,7 +9,12 @@ module Test
   module Pairwise
     # The command-line interface for the pairwise tool.
     class Engine
-      # Initializes a new instance of the +Engine+ class from the supplied command-line arguments.
+      # Gets the parameter hash to be given to the `Jenny` utility.
+      attr_reader :hash
+
+      # Initializes a new instance of the `Engine` class from the supplied command-line arguments.
+      # 
+      # @param [Array] args List of arguments passed on the command line.
       def initialize(*args)
         @arguments = args
       end
@@ -21,17 +26,16 @@ module Test
         @results = Jenny::parse(output, @hash)
       end
       
-      # Gets the parameter hash to be given to the Jenny utility.
-      def hash
-        @hash
-      end
-      
       # Gets the input file path.
+      # 
+      # @return [String] Path to the input file.
       def input_file
         @input_file.to_s
       end
       
       # Gets the output file path, if it exists.
+      # 
+      # @return [String] Path to the output file.
       def output_file
         @output_file ? @output_file.to_s : nil
       end
@@ -42,7 +46,7 @@ module Test
         @execute = nil
 
         options = OptionParser.new do |opts|
-          opts.banner = 'Usage: #{opts.program_name} FILENAME [options]'
+          opts.banner = "Usage: #{opts.program_name} FILENAME [options]"
           
           opts.on('-o', '--output FILENAME', 'Write the output to FILENAME') do |output|
             @output_file = Pathname.new(output)
@@ -65,12 +69,13 @@ module Test
 
         @execute = true
 
-        raise ArgumentError, "Must specify an input file" if @arguments.count < 1
-        raise ArgumentError, "There can be only one input file" if @arguments.count > 1
+        raise ArgumentError, 'Must specify an input file' if @arguments.count < 1
+        raise ArgumentError, 'There can be only one input file' if @arguments.count > 1
         
         @input_file = Pathname.new(@arguments[0])
       end
       
+      # Reads the input file and parses it.
       def read_input
         @hash = {}
         
@@ -91,7 +96,7 @@ module Test
         @results
       end
       
-      # Executes the normal command-line flow for the +Engine+.
+      # Executes the normal command-line flow for the `Engine`.
       def run
         parse_arguments
         
@@ -119,6 +124,8 @@ module Test
       end
       
       # Puts together the version text from various constants.
+      # 
+      # @return [String] Version text for display.
       def version_text
         items = []
         items << "#{GEM_NAME}"
